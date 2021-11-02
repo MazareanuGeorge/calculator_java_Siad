@@ -13,16 +13,18 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
-
 public class Calculator {
 
 	private JFrame frame;
 	private JTextField textField;
-	public static boolean pointPressed = false;
-	public static String operation = "";
-	public static Double result = 0.0;
-	public static Double number = 0.0;
+	private  boolean pointPressed = false;
+	private  String operation = "";
+	private  Double result = 0.0;
+	private  Double number = 0.0;
+	private boolean firstZero = true;
+    Pattern r = Pattern.compile("^[0]+$");
 
 	/**
 	 * Launch the application.
@@ -52,11 +54,14 @@ public class Calculator {
 		myTextField.setText(number);
 	}
 	public void setSign(JButton button,JTextField myTextField) {
+		if(myTextField.getText().length() > 1)
+		System.out.println(myTextField.getText());
 		result= Double.parseDouble(myTextField.getText());
 		pointPressed = false;
 		System.out.println(result);
 		operation = "";
 		operation = button.getText();
+		System.out.println(operation);
 		myTextField.setText("");
 	}
 	
@@ -89,8 +94,22 @@ public class Calculator {
 		myTextField.setText(result.toString());
 		
 	}
-	public void operate()
-	{}
+	public void checkZero(JButton button,JTextField myTextField)
+	{
+		try {
+		if(Pattern.matches("^[0]+$", textField.getText()))
+		{
+			textField.setText("0");
+		}
+		}catch(Exception e) {}
+
+	}
+	public void checkZeroPositionOne(JButton button,JTextField myTextField) {
+		if(Pattern.matches("^[0]+$",myTextField.getText().substring(0,myTextField.getText().length()-1)))
+		{
+			myTextField.setText(button.getText());
+		}
+	}
 
 	/**
 	 * Initialize the contents of the frame.
@@ -111,6 +130,8 @@ public class Calculator {
 		JButton btnNewButton = new JButton("<");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				pointPressed = false;
+				firstZero = true;
 				try {
 				textField.setText(textField.getText().substring(0,textField.getText().length()-1));
 				}
@@ -126,6 +147,7 @@ public class Calculator {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setNumber(btnNewButton_1,textField);
+				checkZeroPositionOne(btnNewButton_1,textField);
 			}
 		});
 		btnNewButton_1.setBounds(10, 130, 48, 44);
@@ -135,6 +157,7 @@ public class Calculator {
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setNumber(btnNewButton_2,textField);
+				checkZeroPositionOne(btnNewButton_2,textField);
 			}
 		});
 		btnNewButton_2.setBounds(10, 180, 48, 44);
@@ -144,6 +167,7 @@ public class Calculator {
 		btnNewButton_2_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setNumber(btnNewButton_2_1,textField);
+				checkZeroPositionOne(btnNewButton_2_1,textField);
 			}
 		});
 		btnNewButton_2_1.setBounds(10, 230, 48, 44);
@@ -156,6 +180,8 @@ public class Calculator {
 				number = 0.0;
 				result = 0.0;
 				operation = "";
+				pointPressed = false;
+				firstZero = true;
 			}
 		});
 		btnNewButton_2_2.setBounds(100, 80, 48, 44);
@@ -165,6 +191,7 @@ public class Calculator {
 		btnNewButton_2_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setNumber(btnNewButton_2_3,textField);
+				checkZeroPositionOne(btnNewButton_2_3,textField);
 			}
 		});
 		btnNewButton_2_3.setBounds(100, 130, 48, 44);
@@ -174,6 +201,7 @@ public class Calculator {
 		btnNewButton_2_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setNumber(btnNewButton_2_4,textField);
+				checkZeroPositionOne(btnNewButton_2_4,textField);
 			}
 		});
 		btnNewButton_2_4.setBounds(100, 180, 48, 44);
@@ -183,6 +211,7 @@ public class Calculator {
 		btnNewButton_2_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setNumber(btnNewButton_2_5,textField);
+				checkZeroPositionOne(btnNewButton_2_5,textField);
 			}
 		});
 		btnNewButton_2_5.setBounds(100, 230, 48, 44);
@@ -192,6 +221,7 @@ public class Calculator {
 		btnNewButton_2_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setNumber(btnNewButton_2_6,textField);
+				checkZero(btnNewButton_2_6, textField);
 			}
 		});
 		btnNewButton_2_6.setBounds(190, 80, 48, 44);
@@ -201,6 +231,7 @@ public class Calculator {
 		btnNewButton_2_3_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setNumber(btnNewButton_2_3_1,textField);
+				checkZeroPositionOne(btnNewButton_2_3_1,textField);
 			}
 		});
 		btnNewButton_2_3_1.setBounds(190, 130, 48, 44);
@@ -210,6 +241,7 @@ public class Calculator {
 		btnNewButton_2_3_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setNumber(btnNewButton_2_3_2,textField);
+				checkZeroPositionOne(btnNewButton_2_3_2,textField);
 			}
 		});
 		btnNewButton_2_3_2.setBounds(190, 180, 48, 44);
@@ -219,6 +251,7 @@ public class Calculator {
 		btnNewButton_2_3_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setNumber(btnNewButton_2_3_3,textField);
+				checkZeroPositionOne(btnNewButton_2_3_3,textField);
 			}
 		});
 		btnNewButton_2_3_3.setBounds(190, 230, 48, 44);
@@ -264,6 +297,7 @@ public class Calculator {
 		btnNewButton_2_3_4_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setNumber(btnNewButton_2_3_4_4,textField);
+				checkZero(btnNewButton_2_3_4_4, textField);
 			}
 		});
 		btnNewButton_2_3_4_4.setBounds(10, 285, 48, 44);
@@ -284,6 +318,7 @@ public class Calculator {
 		JButton btnNewButton_2_3_4_6 = new JButton("=");
 		btnNewButton_2_3_4_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				pointPressed = false;
 				setResult(textField);
 			}
 		});
